@@ -477,20 +477,22 @@ if(!function_exists('user_http_referer')) {
 	}
 }
 
-function user_auth_check($token) {
-	// hook user_auth_check_start.php
-	global $time;
-	$auth = param(2);
-	$s = decrypt($auth);
-	empty($s) AND message(-1, lang('decrypt_failed'));
-	$arr = explode('-', $s);
-	count($arr) != 3 AND message(-1, lang('encrypt_failed'));
-	list($_ip, $_time, $_uid) = $arr;
-	$_user = user_read($_uid);
-	empty($_user) AND message(-1, lang('user_not_exists'));
-	$time - $_time > 3600 AND message(-1, lang('link_has_expired'));
-	// hook user_auth_check_end.php
-	return $_user;
+if (!function_exists('user_auth_check')) {
+    function user_auth_check($token) {
+        // hook user_auth_check_start.php
+        global $time;
+        $auth = param(2);
+        $s = decrypt($auth);
+        empty($s) AND message(-1, lang('decrypt_failed'));
+        $arr = explode('-', $s);
+        count($arr) != 3 AND message(-1, lang('encrypt_failed'));
+        list($_ip, $_time, $_uid) = $arr;
+        $_user = user_read($_uid);
+        empty($_user) AND message(-1, lang('user_not_exists'));
+        $time - $_time > 3600 AND message(-1, lang('link_has_expired'));
+        // hook user_auth_check_end.php
+        return $_user;
+    }
 }
 
 ?>

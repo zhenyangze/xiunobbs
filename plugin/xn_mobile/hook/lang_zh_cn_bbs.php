@@ -1,4 +1,5 @@
 	'login_type_1'=>'手机 / Email / 用户名',
+	'login_type_1'=>'手机 / Email / 用户名',
 	'login_type_2'=>'手机 / Email',
 	'login_type_3'=>'手机 / 用户名',
 	'login_type_4'=>'手机',
