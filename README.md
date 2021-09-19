@@ -50,11 +50,9 @@ Xiuno BBS 4 正式版经历了近 2 年，7 个 beta 版本，最终定型，这
 nginx:
 
 ```conf
-location/{
+location ~* \.(htm)$ {
 
-rewrite"^(.*)/(.+?).htm$"$1/index.php?$2.htmlast;if(!-e $request_filename) {
-
-rewrite ^(.*)$ /index.php?s=$1 last;
+rewrite "^(.*)/(.+?).htm(.*?)$" $1/index.php?$2.htm$3 last;
 
 }
 
