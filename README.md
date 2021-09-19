@@ -40,8 +40,41 @@ xiunophp 4.0 这个框架合并成了一个文件 xiunophp.min.php，只需要�
 
 Xiuno BBS 4 正式版经历了近 2 年，7 个 beta 版本，最终定型，这可能是最后一个大版本，放心动手二次开发吧。
 
+【URL-Rewrite 】
+
+将 .htm 转发到 index.php?.htm 即可。具体需要以下 2 步开启 URL-Rewrite
+
+1. 编辑conf/conf.php'url_rewrite_on'=>1,
+2. 清空tmp目录
+
+nginx:
+
+```conf
+location/{
+
+rewrite"^(.*)/(.+?).htm$"$1/index.php?$2.htmlast;if(!-e $request_filename) {
+
+rewrite ^(.*)$ /index.php?s=$1 last;
+
+}
+
+index index.html index.htmindex.php;root /data/wwwroot/xiuno.com;
+
+}
+```
+
+.htaccess
+
+```conf
+<IfModulemod_rewrite.c>RewriteEngine on
+
+RewriteCond%{REQUEST_FILENAME}!-d RewriteCond%{REQUEST_FILENAME}!-f
+
+RewriteRule^admin/(.*)\.htm(.*)$/admin/index.php?$1.htm$2[L]RewriteRule^(.*)\.htm(.*)$/index.php?$1.htm$2[L]
+```
 
 ### 【性能方面】
+
 采用静态语言编程风格，充分发挥 PHP7 OPCache 的威力。
 
 专门针对 BBS 业务的索引优化和适度的缓存。
@@ -54,12 +87,3 @@ Xiuno BBS 4 正式版经历了近 2 年，7 个 beta 版本，最终定型，这
 Xiuno BBS 4.0 采用 MIT 协议发布，您可以自由修改、派生版本、商用而不用担心任何法律风险（修改后应保留原来的版权信息）。
 
 我们承诺对主程序永远免费，在没有盈利前接受正派人士的捐赠。
-
-### 【站长交流群】
-474834730
-
-### 【开发者群】
-2759536
-
-axiuno@gmail.com
-2018/1/17
